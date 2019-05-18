@@ -1,0 +1,23 @@
+$def with(word)
+<script>
+function myFunction() {
+  var x = document.getElementById("meaning");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}  
+window.onload = function(){ myFunction(); }
+</script>
+
+<h1 style="color: #5e9ca0;">Welcome,&nbsp;<span style="color: #2b2301;">huahua!</span>&nbsp;</h1>
+<h1 style="color: #5e9ca0;">Word:</h1>
+<h1>&nbsp; &nbsp; $:word.name</h1>
+<h1 style="color: #5e9ca0;">Meaning:&nbsp;</h1> 
+<div id="meaning">
+<p>&nbsp; &nbsp; &nbsp; $:word.mean &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>
+</div>
+<button onclick="myFunction()">Show Meaning</button>
+<h2 style="color: #2e6c80;">&nbsp;|&nbsp; &nbsp;<a href="test">Next</a>&nbsp; &nbsp; |&nbsp; &nbsp;<a href="/">Back</a>&nbsp; &nbsp;|</h2>
+<h1><a href="/logout">logout</a></h1>

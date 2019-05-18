@@ -1,0 +1,19 @@
+$def with (username, acts)
+$if username:
+    <h1 style="color: #5e9ca0;">Welcome,&nbsp;<span style="color: #2b2301;">$(username)!</span>&nbsp;Let's go!</h1>
+    <p><img style="float: left;" src="https://html-online.com/img/01-interactive-connection.png" alt="interactive connection" width="45" /></p>
+    <h2 style="color: #2e6c80;"><a href="/test"><span style="text-decoration: underline;">Do Some Test </span></a></h2>
+    <p><img style="float: left;" src="https://html-online.com/img/03-docs-to-html.png" alt="Word to html" width="45" /></p>
+    <h2 style="color: #2e6c80;"><a href="/upload"><span style="text-decoration: underline;">Upload Some New Words</span></a></h2>
+    <p><img style="float: left;" src="https://html-online.com/img/04-replace.png" alt="replace text" width="45" /></p>
+    <h2 style="color: #2e6c80;"><a href="/addfriend"><span style="text-decoration: underline;">Add New Friends</span></a></h2>
+    <p><img style="float: left;" src="https://html-online.com/img/6-table-div-html.png" alt="html table div" width="45" /></p>
+    <h2 style="color: #2e6c80;"><a href="/clockin"><span style="text-decoration: underline;">Every Day Clock-in</span></a></h2>
+    <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>
+    <h2 style="color: #2e6c80;">Recent Friends' Activity:</h2>
+    $for a in acts:
+        <p><strong>&nbsp; &nbsp; &nbsp;$:a.user&nbsp;</strong>$:a.getcontent()</p>
+$else:
+    Not correctly loged in, please click logout to relogin!
+<h1><a href="/logout">logout</a></h1>
+

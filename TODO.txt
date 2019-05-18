@@ -5,24 +5,31 @@ function:
 E-R:
     USER, ACTIVITY, WORD
 tables:
-    USER
-        USERNAME, EMAIL, PASSWORD, PASSWORD
-    WORD
-        WORD, Meaning
-    USER-LIST
-        WORD, USERNAME
-    USER-FRIEND
-        USERNAME1, USERNAME2
-    USER-ACTIVITY
-        USERNAME, ACTIVITY_ID
-    ACTIVITY
-        ACTIVITY_ID, TIME, ACTIVITY_TYPE, ACTIVITY_CONTENT
+    activity
+        AID uname time type content
+    friends
+        uname use_uname
+    testresult
+        uname testtime count correctness
+    users
+        uname password email
+    word
+        uname wordname meaning count
+
+** activities
+type:
+    1: upload word: $name uploaded $cnt new words
+    2: doing test: $name conducted a test of $cnt words
+    3: share word: $name shared a new word $word
+    4: clock-in: $name commited the clock-in today
+
 
 PAGES:
-    sign in
-    register
+    sign in  -- DONE 
+    register -- DONE
     user interface
-        upload word
-        word test
-        sign
-        frient activity
+        upload word  -- DONE
+        word test -- DONE
+        sign    -- DONE
+        friend activity -- DONE
+        MailBox: friends query! -- DONE

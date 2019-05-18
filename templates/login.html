@@ -1,0 +1,8 @@
+$def with (form,user)
+
+<form name="main" method="post"> 
+$if not form.valid: <p class="error">There are some items not correct, please try again!</p>
+$if not user:<p class="error">Username or password not correct, please try again!</p>
+$:form.render()
+</form>
+<h1><a href="/register">Sign Up</a></h1>
