@@ -2,6 +2,7 @@
 import csv
 import math
 import random
+import re
 import time
 random.seed(int(time.time()))
 import sys,hashlib
@@ -43,12 +44,12 @@ session = web.session.Session(app,
 loginform = form.Form(
     form.Textbox('username',
         form.notnull,
-        form.regexp('[A-Za-z0-9\-]+', 'Must be alpha or digit!'),
-        form.Validator('Must be more than 5 characters!', lambda y:len(y)>5)),
+        form.regexp('[A-Za-z0-9\-]+', 'Must be alpha or digit!')),
+        #form.Validator('Must be more than 5 characters!', y:len(y)>5)),
     form.Password('password',
         form.notnull,
-        form.regexp('[A-Za-z0-9\-]+', 'Must be alpha or digit!'),
-        form.Validator('Must be more than 5 characters!', lambda y:len(y)>5)),
+        form.regexp('[A-Za-z0-9\-]+', 'Must be alpha or digit!')),
+        #form.Validator('Must be more than 5 characters!', lambda y:len(y)>5)),
     form.Button('Login')
 )
 
@@ -232,16 +233,31 @@ class index:
             activities = getShownAcitvity(username)
             return render.index(username, activities)
 
+def validateRegister(i):
+    if not i.username:
+        return "Need a Username"
+    if not i.pwd1:
+        return "Need a password"
+    if i.pwd1 != i.pwd2:
+        return "password not identical"
+    EMAIL_REGEX = re.compile("[^@]+@[^@]+\.[^@]+")
+    if not EMAIL_REGEX.match(i.email):
+        return "Not a valid email"
+
+    user = db.query("SELECT uname FROM users WHERE uname = $name OR email = $mail", 
+            vars = {'name':i.username, 'mail': i.email})
+    if user and len(user) > 0:
+        return "User/Email Already Exists!"
+    return True
+    
+    
 class register:
     def GET(self):
         return render.register("")
     def POST(self): 
         i = web.input()
-        if i.username:
-            user = db.query("SELECT uname FROM users WHERE uname = $name",
-                    vars = {'name':i.username})
-            if user and len(user) > 0:
-                return render.register("User Already Exists!")
+        msg = validateRegister(i)
+        if validateRegister(i) == True:
             userInsert = db.insert('users', 
                     uname=i.username, 
                     password=hashlib.md5(i.pwd1).hexdigest(),
@@ -250,7 +266,8 @@ class register:
             #return render.index(i.username)
             raise web.seeother('/')
         else:
-            return render.register("")
+            print(msg)
+            return render.register(msg)
 
 class login:
     def GET(self): 
